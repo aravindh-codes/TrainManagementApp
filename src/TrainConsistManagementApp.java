@@ -1,35 +1,34 @@
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * ==========================================================
- * MAIN CLASS – TrainConsistManagementApp
+ * MAIN CLASS – TrainConsistManagementAppUC2
  * ==========================================================
  *
- * UC1: Initialize Train and Display Consist Summary
+ * UC2: Add Passenger Bogies to Train (ArrayList Operations)
  *
  * Goal:
- * Initialize the Train Consist Management App and display
- * the initial state of the train.
+ * Allow dynamic insertion and removal of passenger bogies
+ * using ArrayList.
  *
  * Actor:
  * User – runs the application
  *
  * Flow:
- * 1. User runs the program
- * 2. Application prints welcome message
- * 3. Train consist is initialized
- * 4. Initial bogie count is displayed
- * 5. Program continues
+ * 1. User runs program
+ * 2. Passenger bogies are added
+ * 3. Bogies are displayed
+ * 4. A bogie is removed
+ * 5. Existence is checked
+ * 6. Program continues
  *
  * Key Concepts Used:
- * - Class: Container for program logic
- * - main() Method: Entry point of execution
- * - static Keyword: Allows JVM to invoke main() directly
- * - List Interface: Abstraction for list structures
  * - ArrayList: Dynamic resizable collection
- * - Console Output: Using System.out.println()
- * - Dynamic Initialization: Creating empty list
+ * - add(): Insert elements
+ * - remove(): Delete elements
+ * - contains(): Check existence
+ * - Insertion Order Preservation
+ * - CRUD Operations on collections
  *
  * @author Developer
  * @version 1.0
@@ -43,22 +42,40 @@ public class TrainConsistManagementApp {
      */
     public static void main(String[] args) {
 
-        // Step 1: Welcome Message
-        System.out.println("=== Train Consist Management App ===");
+        // Header
+        System.out.println("========================================");
+        System.out.println("UC2 - Add Passenger Bogies to Train");
+        System.out.println("========================================\n");
 
-        // Step 2: Initialize train consist using ArrayList
-        List<String> trainConsist = new ArrayList<>();
+        // Step 1: Create ArrayList for passenger bogies
+        ArrayList<String> passengerBogies = new ArrayList<>();
 
-        // Step 3: Confirmation message
-        System.out.println("Train initialized successfully...");
+        // Step 2: Add bogies (CREATE operation)
+        passengerBogies.add("Sleeper");
+        passengerBogies.add("AC Chair");
+        passengerBogies.add("First Class");
 
-        // Step 4: Display initial bogie count
-        System.out.println("Initial Bogie Count : " + trainConsist.size());
+        // Step 3: Display after insertion (READ)
+        System.out.println("After Adding Bogies:");
+        System.out.println("Passenger Bogies : " + passengerBogies + "\n");
 
-        // Step 5: Display current train consist
-        System.out.println("Current Train Consist: " + trainConsist);
+        // Step 4: Remove a bogie (DELETE operation)
+        passengerBogies.remove("AC Chair");
 
-        // Step 6: System ready message
-        System.out.println("\nSystem ready for operations...");
+        System.out.println("After Removing 'AC Chair':");
+        System.out.println("Passenger Bogies : " + passengerBogies + "\n");
+
+        // Step 5: Check existence (SEARCH)
+        boolean exists = passengerBogies.contains("Sleeper");
+
+        System.out.println("Checking if 'Sleeper' exists:");
+        System.out.println("Contains Sleeper? : " + exists + "\n");
+
+        // Step 6: Final state
+        System.out.println("Final Train Passenger Consist:");
+        System.out.println(passengerBogies + "\n");
+
+        // Completion message
+        System.out.println("UC2 operations completed successfully...");
     }
 }
