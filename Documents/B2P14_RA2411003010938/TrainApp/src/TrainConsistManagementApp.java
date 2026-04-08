@@ -3,116 +3,97 @@ import java.util.*;
 /**
  * ============================================================
  * Train Consist Management App
- * UC15 - Safe Cargo Assignment (try-catch-finally)
+ * UC16 - Sort Passenger Bogies (Bubble Sort)
  * ============================================================
  */
 
-// ---------------- CUSTOM RUNTIME EXCEPTION ----------------
-class CargoSafetyException extends RuntimeException {
-    public CargoSafetyException(String message) {
-        super(message);
-    }
-}
+public class TrainConsistManagementApp {
 
-// ---------------- GOODS BOGIE CLASS ----------------
-class GoodsBogie {
-    String shape;     // Rectangular / Cylindrical
-    String cargo;     // Petroleum / Coal / etc.
+    // ---------------- BUBBLE SORT METHOD ----------------
+    public static void bubbleSort(int[] arr) {
 
-    GoodsBogie(String shape) {
-        this.shape = shape;
-    }
+        int n = arr.length;
 
-    // Cargo Assignment Logic with try-catch-finally
-    public void assignCargo(String cargoType) {
-        try {
-            // Validate unsafe condition
-            if (this.shape.equalsIgnoreCase("Rectangular") &&
-                    cargoType.equalsIgnoreCase("Petroleum")) {
+        // Outer loop for passes
+        for (int i = 0; i < n - 1; i++) {
 
-                throw new CargoSafetyException(
-                        "Unsafe: Petroleum cannot be assigned to Rectangular bogie");
+            // Inner loop for comparison
+            for (int j = 0; j < n - i - 1; j++) {
+
+                // Swap if out of order
+                if (arr[j] > arr[j + 1]) {
+
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
             }
-
-            // Safe assignment
-            this.cargo = cargoType;
-            System.out.println("Cargo assigned successfully: " + cargoType + " -> " + shape);
-
-        } catch (CargoSafetyException e) {
-            System.out.println("Error: " + e.getMessage());
-
-        } finally {
-            System.out.println("Cargo assignment attempt completed for " + shape);
         }
     }
 
-    @Override
-    public String toString() {
-        return "GoodsBogie{shape='" + shape + "', cargo='" + cargo + "'}";
+    // ---------------- HELPER METHOD ----------------
+    public static void printArray(int[] arr) {
+        System.out.print("[ ");
+        for (int x : arr) {
+            System.out.print(x + " ");
+        }
+        System.out.println("]");
     }
-}
 
-// ---------------- MAIN APPLICATION ----------------
-public class TrainConsistManagementApp {
-
+    // ---------------- MAIN ----------------
     public static void main(String[] args) {
 
         System.out.println("\n========================================");
-        System.out.println("UC15 - Safe Cargo Assignment");
+        System.out.println("UC16 - Bubble Sort (Manual Sorting)");
         System.out.println("========================================");
 
-        // Create bogies
-        GoodsBogie rectangular = new GoodsBogie("Rectangular");
-        GoodsBogie cylindrical = new GoodsBogie("Cylindrical");
-
         // ---------------- FLOW DEMO ----------------
-        rectangular.assignCargo("Coal");         // Safe
-        rectangular.assignCargo("Petroleum");    // Unsafe
-        cylindrical.assignCargo("Petroleum");    // Safe
+        int[] capacities = {72, 56, 24, 70, 60};
 
-        System.out.println("\nFinal State:");
-        System.out.println(rectangular);
-        System.out.println(cylindrical);
+        System.out.println("\nBefore Sorting:");
+        printArray(capacities);
+
+        bubbleSort(capacities);
+
+        System.out.println("\nAfter Sorting:");
+        printArray(capacities);
 
         // ============================================================
         // TEST CASES (Visible Output)
         // ============================================================
 
-        System.out.println("\n--- UC15 TEST CASES ---");
+        System.out.println("\n--- UC16 TEST CASES ---");
 
-        // Test 1: Safe Assignment
-        GoodsBogie g1 = new GoodsBogie("Cylindrical");
-        g1.assignCargo("Petroleum");
-        boolean test1 = "Petroleum".equals(g1.cargo);
-        System.out.println("testCargo_SafeAssignment: " + (test1 ? "PASSED" : "FAILED"));
+        // Test 1: Basic Sorting
+        int[] t1 = {72, 56, 24, 70, 60};
+        bubbleSort(t1);
+        boolean test1 = Arrays.equals(t1, new int[]{24, 56, 60, 70, 72});
+        System.out.println("testSort_BasicSorting: " + (test1 ? "PASSED" : "FAILED"));
 
-        // Test 2: Unsafe Assignment Handled
-        GoodsBogie g2 = new GoodsBogie("Rectangular");
-        g2.assignCargo("Petroleum");
-        boolean test2 = g2.cargo == null;
-        System.out.println("testCargo_UnsafeAssignmentHandled: " + (test2 ? "PASSED" : "FAILED"));
+        // Test 2: Already Sorted
+        int[] t2 = {24, 56, 60, 70, 72};
+        bubbleSort(t2);
+        boolean test2 = Arrays.equals(t2, new int[]{24, 56, 60, 70, 72});
+        System.out.println("testSort_AlreadySortedArray: " + (test2 ? "PASSED" : "FAILED"));
 
-        // Test 3: Cargo Not Assigned After Failure
-        boolean test3 = g2.cargo == null;
-        System.out.println("testCargo_CargoNotAssignedAfterFailure: " + (test3 ? "PASSED" : "FAILED"));
+        // Test 3: Duplicate Values
+        int[] t3 = {72, 56, 56, 24};
+        bubbleSort(t3);
+        boolean test3 = Arrays.equals(t3, new int[]{24, 56, 56, 72});
+        System.out.println("testSort_DuplicateValues: " + (test3 ? "PASSED" : "FAILED"));
 
-        // Test 4: Program Continues After Exception
-        boolean test4 = true;
-        try {
-            GoodsBogie g3 = new GoodsBogie("Rectangular");
-            g3.assignCargo("Petroleum"); // exception handled internally
-            GoodsBogie g4 = new GoodsBogie("Cylindrical");
-            g4.assignCargo("Coal");      // should still run
-        } catch (Exception e) {
-            test4 = false;
-        }
-        System.out.println("testCargo_ProgramContinuesAfterException: " + (test4 ? "PASSED" : "FAILED"));
+        // Test 4: Single Element
+        int[] t4 = {50};
+        bubbleSort(t4);
+        boolean test4 = Arrays.equals(t4, new int[]{50});
+        System.out.println("testSort_SingleElementArray: " + (test4 ? "PASSED" : "FAILED"));
 
-        // Test 5: Finally Block Execution (manual validation)
-        // We assume finally runs since message prints always
-        boolean test5 = true;
-        System.out.println("testCargo_FinallyBlockExecution: " + (test5 ? "PASSED" : "FAILED"));
+        // Test 5: All Equal Values
+        int[] t5 = {40, 40, 40};
+        bubbleSort(t5);
+        boolean test5 = Arrays.equals(t5, new int[]{40, 40, 40});
+        System.out.println("testSort_AllEqualValues: " + (test5 ? "PASSED" : "FAILED"));
 
-        System.out.println("\nUC15 completed successfully...");
+        System.out.println("\nUC16 completed successfully...");
     }
 }
