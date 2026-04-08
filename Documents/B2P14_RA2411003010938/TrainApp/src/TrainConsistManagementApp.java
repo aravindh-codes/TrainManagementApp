@@ -3,71 +3,78 @@ import java.util.*;
 /**
  * ============================================================
  * Train Consist Management App
- * UC17 - Sort Bogie Names using Arrays.sort()
+ * UC18 - Linear Search for Bogie ID
  * ============================================================
  */
 
 public class TrainConsistManagementApp {
 
+    // ---------------- LINEAR SEARCH METHOD ----------------
+    public static boolean linearSearch(String[] arr, String key) {
+
+        for (String id : arr) {
+
+            // Compare using equals()
+            if (id.equals(key)) {
+                return true; // Early termination
+            }
+        }
+
+        return false; // Not found
+    }
+
+    // ---------------- MAIN ----------------
     public static void main(String[] args) {
 
         System.out.println("\n========================================");
-        System.out.println("UC17 - Arrays.sort() (Built-in Sorting)");
+        System.out.println("UC18 - Linear Search (Unsorted Data)");
         System.out.println("========================================");
 
         // ---------------- FLOW DEMO ----------------
-        String[] bogieTypes = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
+        String[] bogieIDs = {"BG101","BG205","BG309","BG412","BG550"};
 
-        System.out.println("\nBefore Sorting:");
-        System.out.println(Arrays.toString(bogieTypes));
+        String searchKey = "BG309";
 
-        // Built-in sorting
-        Arrays.sort(bogieTypes);
+        System.out.println("\nBogie IDs: " + Arrays.toString(bogieIDs));
+        System.out.println("Searching for: " + searchKey);
 
-        System.out.println("\nAfter Sorting:");
-        System.out.println(Arrays.toString(bogieTypes));
+        boolean found = linearSearch(bogieIDs, searchKey);
+
+        if (found) {
+            System.out.println("Result: Bogie FOUND");
+        } else {
+            System.out.println("Result: Bogie NOT FOUND");
+        }
 
         // ============================================================
         // TEST CASES (Visible Output)
         // ============================================================
 
-        System.out.println("\n--- UC17 TEST CASES ---");
+        System.out.println("\n--- UC18 TEST CASES ---");
 
-        // Test 1: Basic Alphabetical Sorting
-        String[] t1 = {"Sleeper","AC Chair","First Class","General","Luxury"};
-        Arrays.sort(t1);
-        boolean test1 = Arrays.equals(t1,
-                new String[]{"AC Chair","First Class","General","Luxury","Sleeper"});
-        System.out.println("testSort_BasicAlphabeticalSorting: " + (test1 ? "PASSED" : "FAILED"));
+        String[] base = {"BG101","BG205","BG309","BG412","BG550"};
 
-        // Test 2: Unsorted Input
-        String[] t2 = {"Luxury","General","Sleeper","AC Chair"};
-        Arrays.sort(t2);
-        boolean test2 = Arrays.equals(t2,
-                new String[]{"AC Chair","General","Luxury","Sleeper"});
-        System.out.println("testSort_UnsortedInput: " + (test2 ? "PASSED" : "FAILED"));
+        // Test 1: Bogie Found
+        boolean test1 = linearSearch(base, "BG309");
+        System.out.println("testSearch_BogieFound: " + (test1 ? "PASSED" : "FAILED"));
 
-        // Test 3: Already Sorted Array
-        String[] t3 = {"AC Chair","First Class","General"};
-        Arrays.sort(t3);
-        boolean test3 = Arrays.equals(t3,
-                new String[]{"AC Chair","First Class","General"});
-        System.out.println("testSort_AlreadySortedArray: " + (test3 ? "PASSED" : "FAILED"));
+        // Test 2: Bogie Not Found
+        boolean test2 = !linearSearch(base, "BG999");
+        System.out.println("testSearch_BogieNotFound: " + (test2 ? "PASSED" : "FAILED"));
 
-        // Test 4: Duplicate Bogie Names
-        String[] t4 = {"Sleeper","AC Chair","Sleeper","General"};
-        Arrays.sort(t4);
-        boolean test4 = Arrays.equals(t4,
-                new String[]{"AC Chair","General","Sleeper","Sleeper"});
-        System.out.println("testSort_DuplicateBogieNames: " + (test4 ? "PASSED" : "FAILED"));
+        // Test 3: First Element Match
+        boolean test3 = linearSearch(base, "BG101");
+        System.out.println("testSearch_FirstElementMatch: " + (test3 ? "PASSED" : "FAILED"));
+
+        // Test 4: Last Element Match
+        boolean test4 = linearSearch(base, "BG550");
+        System.out.println("testSearch_LastElementMatch: " + (test4 ? "PASSED" : "FAILED"));
 
         // Test 5: Single Element Array
-        String[] t5 = {"Sleeper"};
-        Arrays.sort(t5);
-        boolean test5 = Arrays.equals(t5,
-                new String[]{"Sleeper"});
-        System.out.println("testSort_SingleElementArray: " + (test5 ? "PASSED" : "FAILED"));
+        String[] single = {"BG101"};
+        boolean test5 = linearSearch(single, "BG101");
+        System.out.println("testSearch_SingleElementArray: " + (test5 ? "PASSED" : "FAILED"));
 
-        System.out.println("\nUC17 completed successfully...");
+        System.out.println("\nUC18 completed successfully...");
     }
 }
